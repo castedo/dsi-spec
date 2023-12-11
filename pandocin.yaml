@@ -1,4 +1,21 @@
-# Reference https://pandoc.org/MANUAL.html#defaults-files
-
-# Change "/dev/null" to the name of a new input source file:
-input-file: "/dev/null"
+input-files:
+    - ${.}/begin.md
+    - ${.}/rationale.md
+    - ${.}/end.md
+bibliography: ${.}/references.bib
+metadata:
+  author:
+  - surname: Ellerman
+    given-names: E. Castedo
+    email: castedo@castedo.com
+    orcid: https://orcid.org/0000-0002-5014-4809
+  copyright:
+    year: "2023"
+    statement: "© 2023, Ellerman et al"
+    holder: Ellerman et al
+  license:
+    type: open-access
+    link: "https://creativecommons.org/licenses/by/4.0/"
+    text: >-
+      This document is distributed under a Creative Commons Attribution 4.0
+      International license.
