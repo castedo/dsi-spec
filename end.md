@@ -1,78 +1,74 @@
 
 # Document Successions Encoded with Git
 
-When a document succession is first created with Git, it consists of only an
-initial Git commit and no document snapshots.
+When a document succession is first created with Git, it starts as an
+initial Git commit without any document snapshots.
 A *Document Succession Identifier* is an intrinsic identifier
 [@cosmo_referencing_2020] [@dicosmo:hal-01865790] of the initial Git commit.
-To add document snapshots to a document succession, additional git commits are added.
-The Git tree of each commit is not a document snapshot in the succession.
-Instead, it is a record of all the document snapshots in the succession.
-The top-level directory consists of subdirectories named as non-negative integers.
-Each subdirectory contains either an entry named `object` or entries named as
-non-negative integers that are subdirectories.
-An entry named `object` represents a document snapshot in the
-document succession, which can be a file (git blob) or a directory (git tree).
-For example, when a single file is added as edition 1, the full succession record is a
-directory with the path `1/object` leading to a git blob representing edition 1.
+To add document snapshots to a document succession, additional Git commits are added.
+However, the Git tree of each commit does not represent a document snapshot;
+it records all snapshots in the succession.
+The top-level directory contains subdirectories named with non-negative integers.
+Each subdirectory contains either an entry named `object` or subdirectories named with
+non-negative integers.
+An entry named `object` encodes a document snapshot,
+which can be a file (Git blob) or a directory (Git tree).
+For example, adding a single file as edition 1 results in a
+directory path `1/object` that leads to a Git blob for edition 1.
 
 ## Digital Signing
 
-For testing purposes, a document succession in Git can be unsigned. But for public
-sharing, a document succession must be signed.
-Digital signatures are made using SSH signing keys via
+For testing, a document succession in Git can be unsigned.
+However, for public distribution, it must be signed.
+Digital signatures are applied using SSH signing keys through
 [Git](https://en.wikipedia.org/wiki/Git) [@enwiki:git].
-Each Git commit of a signed document succession must be signed
-and contain a subdirectory named `signed_succession` that contains a file
-`allowed_signers` with public signing keys that can extend the document
+Each commit in a signed document succession must be signed
+and contain a `signed_succession` subdirectory containing an
+`allowed_signers` file with the public keys authorized to extend the document
 succession.
 
 
 ## Implementation Choice Rationales
 
-### Separation of git history from edition history
+### Separation of Git History from Edition History
 
-A significant design choice is to not directly rely on git commit history
-to determine the succession of editions.
-Git commit history accurately records the actions performed with git, but it can be
-inflexible and confusing for establishing a clean linear history. Software
-Heritage automatically preserves git commits, which compounds the risk that git commits
-do not correspond well, or even prevent, an intended clean linear history.
-There may be situations where having merge commits and non-linear
-git commit history will be convenient.
+Representing the history of editions by some means other than Git commit history
+is a deliberate design choice.
+Git commit history records all Git actions,
+which can lead to inflexible and complicated non-linear histories.
+Software Heritage automatically preserves Git commits,
+which compounds the risk that a Git commit history
+ends up as an unintended complicated non-linear history.
+Non-linear Git commit histories and merge commits might be useful in certain scenarios.
 
-Having edition history separate from git history also provides a potential path
-for an enhancement akin to retractions of specific editions.
+Separating edition history from Git commit history also allows
+for future enhancements, such as the retraction of specific editions.
 
-### Use of git tree paths instead of git tags
+### Use of Git Tree Paths instead of Git Tags
 
-Edition numbers are similar to release versions of software projects.
-The usual practice in software development is to use git tags to identify releases.
-In contrast, this specification takes a different approach. Edition numbers are
-recorded with file paths in git trees rather than git tags.
+Edition numbers in document successions are akin to software release versions,
+which are typically identified using Git tags.
+However, this specification takes a different approach.
+Edition numbers are recorded with file paths in Git trees rather than Git tags.
+With this approach, a single latest Git commit captures a complete recording of a document succession.
+This means copying document successions is as easy as copying Git branches.
+This is especially useful when copying from multiple sources into a single Git repository.
 
-The main reason for this different approach has to do with how document successions are
-recorded and copied. A highly desirable feature for document successions is the ease of
-copying without errors. It is
-convenient to copy document successions from multiple sources and store them in a single
-git repository. In this specification, a complete document succession is captured
-by just a chain of commits (initial commit to latest commit).
-In contrast, entire software projects, which often include release tags, are usually
-copied by cloning an entire repository.
-If edition numbers were recorded as git annotated tags, copying document successions
-properly would be more complicated and error-prone (due to missing tags).
+In contrast, software projects, which often include release tags,
+are copied by cloning the entire repository.
+Using Git tags for edition numbers would
+introduce a complexity of keeping a branch and edition number tags in sync,
+and thus increase the risk of problems during copying.
 
-Git repository branches are a convenient tool for managing document successions.
-However, branch names are not part of the document succession record.
-
-
+Branches in Git repositories are useful for managing document successions,
+but branch names do not form part of the document succession record.
 
 
 # Acknowledgments
 
-Thank you to Valentin Lorentz for questions about design choices
-and pointing out an important shortcoming in how GPG digital signatures were used in the
-initial implementation of the Hidos library (version 0.3) [@hidos:0.3].
+Thank you to Valentin Lorentz for raising questions about design choices
+and pointing out an important shortcoming in how GPG digital signatures were used
+in the initial implementation of the Hidos library (version 0.3) [@hidos:0.3].
 
 
 # Further Reading
@@ -81,9 +77,9 @@ initial implementation of the Hidos library (version 0.3) [@hidos:0.3].
   related concepts discussed in
   [@cosmo_referencing_2020] [@dicosmo:hal-01865790].
 
-* For a discussion on various concepts and proposed terminology about persistent
-  identifiers, see [@kunze_persistence_2017]. In the proposed terminology, a DSI is a
-  persistent identifier (PID) that is "frozen" and "waxing" with both "intraversioned"
+* For a discussion on various concepts and proposed terminology regarding persistent
+  identifiers, see [@kunze_persistence_2017]. According to the proposed terminology, a DSI is a
+  persistent identifier (PID) that is "frozen" and "waxing" with "intraversioned"
   and "extraversioned" PIDs depending on the edition number.
 
 
@@ -91,15 +87,9 @@ initial implementation of the Hidos library (version 0.3) [@hidos:0.3].
 
 ## From Edition 1 to 2
 
-* Change "digital succession" wording to "document succession".
+* The term "digital succession" has been updated to "document succession."
 
 ## From Edition 1.2
 
-* Reference SSH signing keys instead of GPG/PGP signing keys.
-
-## From Edition 0.2
-
-* Section added about multilevel edition numbering.
-* Design rationale added behind git tree paths instead of git tags.
-* Note future expansion paths for text representation.
+* References to SSH signing keys have replaced mentions of GPG/PGP signing keys.
 

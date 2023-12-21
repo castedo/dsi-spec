@@ -1,6 +1,6 @@
 input-files:
     - ${.}/begin.md
-    - ${.}/rationale.md
+    - ${.}/mid.md
     - ${.}/end.md
 bibliography: ${.}/references.bib
 metadata:
