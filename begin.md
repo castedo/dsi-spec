@@ -22,7 +22,7 @@ abstract: |
 * As of 2023, the website
   [try.perm.pub](https://try.perm.pub) provides documentation, tutorials, and
   guides on resources supporting Document Succession Identifiers (DSIs).
-* For a non-technical discussion of DSIs and their purpose, see
+* For a non-technical overview of DSIs and their purpose, visit
   [Why Publish Digital Successions](https://perm.pub/wk1LzCaCSKkIvLAYObAvaoLNGPc).
 
 
@@ -31,10 +31,10 @@ abstract: |
 ## Document Successions
 
 A document succession contains document snapshots,
-each a static collection of bytes identifiable by a
+each a static collection of bytes identified by a
 [Git](https://en.wikipedia.org/wiki/Git) [@enwiki:git] hash or an equivalent
 [Software Hash Identifier (SWHID)](https://swhid.org).
-A snapshot can be a file or a directory encoded for compatibility with
+A snapshot can be either a file or a directory encoded for compatibility with
 Git, SWHIDs, and the
 [Software Heritage Archive](https://softwareheritage.org) [@cosmo_referencing_2020].
 
@@ -48,14 +48,13 @@ tuple of two to four non-negative integers.
 In a document succession, no fixed edition number can be a prefix of another.
 For instance, if `1.2.3` is a fixed edition number, then `1.2` cannot be a fixed
 edition number.
-However, a non-fixed edition number can identify a dynamic sequence of editions.
-For example, a non-fixed edition number `1.2`
-might identify the sequence `1.2.1`, `1.2.2`, and `1.2.3`.
+However, a non-fixed edition number can identify a dynamic sequence of editions,
+such as `1.2` identifying the sequence `1.2.1`, `1.2.2`, and `1.2.3`.
 
 Multilevel edition numbers resemble software package release numbers
 (for example, software release 2.19.2).
-Larger integers indicate editions that supersede prior editions,
-but only within the same level of an edition number.
+Larger integers represent newer editions
+within the same level of an edition number.
 This specification does not assign semantic meaning
 to specific levels in edition numbers.
 

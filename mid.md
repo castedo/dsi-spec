@@ -3,7 +3,7 @@
 ## Optional DSI Prefix
 
 Users may choose to use a DSI with or without
-a prefix depending on the application context.
+a prefix, depending on the application context.
 An intuitive prefix is `dsi:`, reflecting the acronym "DSI".
 For convenience, some websites offer a URL that acts as a DSI prefix.
 
@@ -26,7 +26,7 @@ $ firefox https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo
 ## Future Extensions
 
 To accommodate future enhancements,
-there are three methods for extending the textual representation of a DSI:
+there are three methods to extend the textual representation of a DSI:
 
 * Use a character that is neither a slash (`/`) nor one of the 64 base64url characters.
 * Vary the number of characters from 27.
@@ -48,12 +48,12 @@ Certain fonts make a poor distinction between some characters.
 For example, some popular sans serif fonts make no visual distinction
 between capital 'I' and lowercase 'l'.
 
-That said, creators of a new document succession are not obligated to use
+However, creators of a new document succession are not obligated to use
 a specific DSI.
-If a DSI is unsuitable, a new one can be generated with ease.
+If a DSI is deemed unsuitable, generating a new one is straightforward.
 
 The main advantage of base64url is its brevity,
-with only 27 characters compared to 40 in hexadecimal.
+requiring only 27 characters compared to 40 in hexadecimal.
 Since DSIs are used in contexts similar to DOIs,
 a 27-character identifier is more likely to be acceptable,
 as it is comparable to the length of a long DOI.
@@ -62,11 +62,11 @@ reducing the likelihood of
 truncation, horizontal scrolling, or the need for very small fonts.
 
 The choice of base64url is partly made on the belief that
-technology trends mitigate the copy-by-human-sight copying issue:
+the following technology trends mitigate the copy-by-human-sight copying issue:
 
 1) Use of hyperlinks, copy-and-paste, and QR codes.
 
-2) Tools that generate websites and PDFs allow customization of fonts.
+2) Tools that generate websites and PDFs with customizable fonts.
 
-3) Human-to-computer interfaces are incorporating
-features like autocomplete and typo correction to mitigate input errors.
+3) Human-to-computer interfaces incorporating
+   features like autocomplete and typo correction to mitigate input errors.

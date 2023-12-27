@@ -5,16 +5,16 @@ When a document succession is first created with Git, it starts as an
 initial Git commit without any document snapshots.
 A *Document Succession Identifier* is an intrinsic identifier
 [@cosmo_referencing_2020] [@dicosmo:hal-01865790] of the initial Git commit.
-To add document snapshots to a document succession, additional Git commits are added.
-However, the Git tree of each commit does not represent a document snapshot;
-it records all snapshots in the succession.
+Subsequent Git commits add document snapshots to a document succession.
+However, the Git tree of each commit does not represent a single document snapshot;
+instead, it records all snapshots in the succession.
 The top-level directory contains subdirectories named with non-negative integers.
-Each subdirectory contains either an entry named `object` or subdirectories named with
-non-negative integers.
+Each subdirectory contains either an entry named `object` or further subdirectories also
+named with non-negative integers.
 An entry named `object` encodes a document snapshot,
-which can be a file (Git blob) or a directory (Git tree).
+which may be a file (Git blob) or a directory (Git tree).
 For example, adding a single file as edition 1 results in a
-directory path `1/object` that leads to a Git blob for edition 1.
+directory path `1/object` that corresponds to a Git blob for edition 1.
 
 ## Digital Signing
 
@@ -24,7 +24,7 @@ Digital signatures are applied using SSH signing keys through
 [Git](https://en.wikipedia.org/wiki/Git) [@enwiki:git].
 Each commit in a signed document succession must be signed
 and contain a `signed_succession` subdirectory containing an
-`allowed_signers` file with the public keys authorized to extend the document
+`allowed_signers` file listing the public keys authorized to extend the document
 succession.
 
 
@@ -42,11 +42,11 @@ ends up as an unintended complicated non-linear history.
 Non-linear Git commit histories and merge commits might be useful in certain scenarios.
 
 Separating edition history from Git commit history also allows
-for future enhancements, such as the retraction of specific editions.
+for future enhancements, such as retracting specific editions.
 
 ### Use of Git Tree Paths instead of Git Tags
 
-Edition numbers in document successions are akin to software release versions,
+In document successions, edition numbers are akin to software release versions,
 which are typically identified using Git tags.
 However, this specification takes a different approach.
 Edition numbers are recorded with file paths in Git trees rather than Git tags.
