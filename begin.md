@@ -1,37 +1,39 @@
+<!-- copybreak off -->
+
 ---
 title: "Document Succession Identifiers"
 date: 2023-12-15
 abstract: |
     **DOCUMENT TYPE**: Technical Specification
 
-    A Document Succession Identifier (DSI) in a bibliographic reference enables
-    long-term retrieval of a cited document from any compatible website.
+    A Document Succession Identifier (DSI) in a bibliographic reference facilitates
+    the long-term retrieval of a cited document from any compatible website.
     A DSI can refer to either a succession of document snapshots
     or a specific document snapshot.
-    This allows readers to discover document updates
-    while retaining access to earlier snapshots.
+    This lets readers discover document updates
+    while preserving access to earlier snapshots.
 
     This technical specification
     formally defines the textual format of a DSI and
     outlines the concept of a document succession.
 ...
 
-
 # Alternative Documents
 
 * As of 2023, the website
   [try.perm.pub](https://try.perm.pub) provides documentation, tutorials, and
-  guides on resources supporting Document Succession Identifiers (DSIs).
+  guides on resources that support Document Succession Identifiers (DSIs).
 * For a non-technical overview of DSIs and their purpose, visit
   [Why Publish Digital Successions](https://perm.pub/wk1LzCaCSKkIvLAYObAvaoLNGPc).
 
+<!-- copybreak off -->
 
 # Specification
 
 ## Document Successions
 
 A document succession contains document snapshots,
-each a static collection of bytes identified by a
+each a static collection of bytes identifiable by a
 [Git](https://en.wikipedia.org/wiki/Git) [@enwiki:git] hash or an equivalent
 [Software Hash Identifier (SWHID)](https://swhid.org).
 A snapshot can be either a file or a directory encoded for compatibility with
@@ -46,7 +48,7 @@ An edition number can be a single non-negative integer or a multilevel
 tuple of two to four non-negative integers.
 
 In a document succession, no fixed edition number can be a prefix of another.
-For instance, if `1.2.3` is a fixed edition number, then `1.2` cannot be a fixed
+For example, if `1.2.3` is a fixed edition number, then `1.2` cannot be a fixed
 edition number.
 However, a non-fixed edition number can identify a dynamic sequence of editions,
 such as `1.2` identifying the sequence `1.2.1`, `1.2.2`, and `1.2.3`.
@@ -62,13 +64,14 @@ The integer `0` has a special meaning in edition numbers.
 An edition number with any zero component is considered *unlisted*.
 Furthermore, the last component integer of a fixed edition number must not be zero.
 
+<!-- copybreak off -->
 
 ## Textual Representation of a DSI
 
-The textual representation of a Document Succession Identifier (DSI) is a base
-identifier, optionally followed by a slash and an edition number.
-The edition number is represented as one to four non-negative
-integers, each less than one thousand, separated by periods.
+The textual representation of a Document Succession Identifier (DSI) consists of a base
+identifier, which may be optionally followed by a slash and an edition number.
+The edition number is composed of one to four non-negative
+integers, each less than one thousand, and separated by periods.
 
 ### Examples
 
@@ -82,7 +85,7 @@ DSI of the first subedition of the first edition:
 : `1wFGhvmv8XZfPx0O5Hya2e9AyXo/1.1`
 
 
-### Base DSI as Git Hash
+### Base DSI as a Git Hash
 
 As of 2023, DSIs are implemented using
 [Git](https://en.wikipedia.org/wiki/Git) [@enwiki:git].
@@ -91,7 +94,7 @@ as long as the risk of identifier collision remains acceptably low.
 In a Git-based implementation,
 the base DSI is calculated from the initial commit of a document succession.
 Git-compatible software calculates a 20-byte binary hash,
-typically represented as a 40-digit hexadecimal string.
+which is typically represented as a 40-digit hexadecimal string.
 For DSIs, this hash is represented by a 27-character string
 using the standard base64url format (RFC 4648)[@rfc4648].
 
@@ -112,4 +115,4 @@ b64u_digit27 ::= "A" | "E" | "I" | "M" | "Q" | "U" | "Y" | "c" |
                  "g" | "k" | "o" | "s" | "w" | "0" | "4" | "8" ;
 ```
 
-The optional `prefix` is unspecified and described in the discussion section.
+The optional `prefix` is unspecified and is described in the discussion section.

@@ -1,14 +1,16 @@
+<!-- copybreak off -->
+
 # Discussion
 
 ## Optional DSI Prefix
 
 Users may choose to use a DSI with or without
 a prefix, depending on the application context.
-An intuitive prefix is `dsi:`, reflecting the acronym "DSI".
-For convenience, some websites offer a URL that acts as a DSI prefix.
+An intuitive choice for a prefix is `dsi:`, which mirrors the acronym "DSI".
+For added convenience, some websites provide a URL that serves as a DSI prefix.
 
 As of 2023, the [Hidos](https://pypi.org/project/hidos/) tool supports DSIs
-with or without the `dsi:` prefix in the `find` subcommand. For example:
+both with and without the `dsi:` prefix in its `find` subcommand. For example:
 
 ```bash
 $ hidos find dsi:1wFGhvmv8XZfPx0O5Hya2e9AyXo
@@ -16,12 +18,13 @@ gh-703611066 https://github.com/digital-successions/1wFGhvmv8XZfPx0O5Hya2e9AyXo.
 ```
 
 As of 2023, the website `perm.pub` supports a URL-based prefix `https://perm.pub/`,
-as shown in the following example:
+as demonstrated in the following example:
 
 ```bash
 $ firefox https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo
 ```
 
+<!-- copybreak off -->
 
 ## Future Extensions
 
@@ -35,6 +38,7 @@ there are three methods to extend the textual representation of a DSI:
   (that is, any base64url character other than
   `A`, `E`, `I`, `M`, `Q`, `U`, `Y`, `c`, `g`, `k`, `o`, `s`, `w`, `0`, `4`, or `8`).
 
+<!-- copybreak off -->
 
 ## Use of Base64url Over Hexadecimal
 
@@ -43,7 +47,7 @@ specified in RFC 4648 [@rfc4648].
 Both base64url and hexadecimal have their advantages and disadvantages.
 
 The main downside to base64url is its susceptibility to copy
-errors when copying relies on human sight.
+errors when the copying process relies on human sight.
 Certain fonts make a poor distinction between some characters.
 For example, some popular sans serif fonts make no visual distinction
 between capital 'I' and lowercase 'l'.
@@ -62,7 +66,7 @@ reducing the likelihood of
 truncation, horizontal scrolling, or the need for very small fonts.
 
 The choice of base64url is partly made on the belief that
-the following technology trends mitigate the copy-by-human-sight copying issue:
+the following technology trends mitigate the copy-by-human-sight issue:
 
 1) Use of hyperlinks, copy-and-paste, and QR codes.
 
