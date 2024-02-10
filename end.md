@@ -84,9 +84,9 @@ in the initial implementation of the Hidos library (version 0.3) [@hidos:0.3].
   [@cosmo_referencing_2020] [@dicosmo:hal-01865790].
 
 * For a discussion on various concepts and proposed terminology regarding persistent
-  identifiers, see [@kunze_persistence_2017]. According to the proposed terminology, a DSI is a
-  persistent identifier (PID) that is "frozen" and "waxing" with "intraversioned"
-  and "extraversioned" PIDs depending on the edition number.
+  identifiers, see [@kunze_persistence_2017]. According to this proposed terminology,
+  a DSI is a persistent identifier (PID) that is "frozen" and "waxing" with
+  "intraversioned" and "extraversioned" PIDs depending on the edition number.
 
 
 # Changes

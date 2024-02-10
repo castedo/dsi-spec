@@ -2,9 +2,9 @@
 
 ---
 title: "Document Succession Identifiers"
-date: 2023-12-15
+date: 2024-02-10
 abstract: |
-    **DOCUMENT TYPE**: Technical Specification
+    **DOCUMENT TYPE**: Living Technical Specification
 
     A Document Succession Identifier (DSI) in a bibliographic reference facilitates
     the long-term retrieval of a cited document from any compatible website.
@@ -115,4 +115,5 @@ b64u_digit27 ::= "A" | "E" | "I" | "M" | "Q" | "U" | "Y" | "c" |
                  "g" | "k" | "o" | "s" | "w" | "0" | "4" | "8" ;
 ```
 
-The optional `prefix` is unspecified and is described in the discussion section.
+The optional `prefix` is unspecified and is described in the discussion section that
+follows.
