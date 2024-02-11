@@ -26,10 +26,10 @@
 <email>castedo@castedo.com</email>
 </contrib>
 </contrib-group>
-<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2023-12-15">
-<day>15</day>
-<month>12</month>
-<year>2023</year>
+<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2024-02-10">
+<day>10</day>
+<month>2</month>
+<year>2024</year>
 </pub-date>
 <permissions>
 <copyright-statement>© 2023, Ellerman et al</copyright-statement>
@@ -41,7 +41,7 @@
 </license>
 </permissions>
 <abstract>
-<p><bold>DOCUMENT TYPE</bold>: Technical Specification</p>
+<p><bold>DOCUMENT TYPE</bold>: Living Technical Specification</p>
 <p>A Document Succession Identifier (DSI) in a bibliographic reference facilitates
 the long-term retrieval of a cited document from any compatible website.
 A DSI can refer to either a succession of document snapshots
@@ -154,7 +154,8 @@ dec_digit := &quot;0&quot; | pos_dec_digit;
 b64u_digit ::= &quot;A&quot; ... &quot;Z&quot; | &quot;a&quot; ... &quot;z&quot; | dec_digit | &quot;-&quot; | &quot;_&quot; ;
 b64u_digit27 ::= &quot;A&quot; | &quot;E&quot; | &quot;I&quot; | &quot;M&quot; | &quot;Q&quot; | &quot;U&quot; | &quot;Y&quot; | &quot;c&quot; |
                  &quot;g&quot; | &quot;k&quot; | &quot;o&quot; | &quot;s&quot; | &quot;w&quot; | &quot;0&quot; | &quot;4&quot; | &quot;8&quot; ;</preformat>
-      <p>The optional <monospace>prefix</monospace> is unspecified and is described in the discussion section.</p>
+      <p>The optional <monospace>prefix</monospace> is unspecified and is described in the discussion section that
+      follows.</p>
     </sec>
   </sec>
 </sec>
@@ -310,9 +311,9 @@ gh-703611066 https://github.com/digital-successions/1wFGhvmv8XZfPx0O5Hya2e9AyXo.
     </list-item>
     <list-item>
       <p>For a discussion on various concepts and proposed terminology regarding persistent
-      identifiers, see <xref alt="6" rid="ref-kunze_persistence_2017" ref-type="bibr">6</xref>. According to the proposed terminology, a DSI is a
-      persistent identifier (PID) that is “frozen” and “waxing” with “intraversioned”
-      and “extraversioned” PIDs depending on the edition number.</p>
+      identifiers, see <xref alt="6" rid="ref-kunze_persistence_2017" ref-type="bibr">6</xref>. According to this proposed terminology,
+      a DSI is a persistent identifier (PID) that is “frozen” and “waxing” with
+      “intraversioned” and “extraversioned” PIDs depending on the edition number.</p>
     </list-item>
   </list>
 </sec>
