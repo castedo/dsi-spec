@@ -1,8 +1,5 @@
-input-files:
-    - ${.}/begin.md
-    - ${.}/doc.md
-    - ${.}/end.md
-bibliography: ${.}/references.bib
+input-file: doc.md
+bibliography: references.bib
 metadata:
   author:
   - surname: Ellerman
