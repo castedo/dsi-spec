@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+# and committing generated baseprint snapshot to autobaseprint branch
 permissions:
   contents: write
   pages: write
@@ -17,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: castedo/baseprinter-action@main
+      - uses: castedo/baseprinter-action@v5
         with:
           defaults-file: "pandocin.yaml"
   deploy:

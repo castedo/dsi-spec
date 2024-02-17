@@ -234,72 +234,11 @@ gh-703611066 https://github.com/digital-successions/1wFGhvmv8XZfPx0O5Hya2e9AyXo.
     </list>
   </sec>
 </sec>
-<sec id="document-successions-encoded-with-git">
-  <title>Document Successions Encoded with Git</title>
-  <p>When a document succession is first created with Git, it begins as an
-  initial Git commit without any document snapshots.
-  A <italic>Document Succession Identifier</italic> is an intrinsic identifier
-  <xref alt="2" rid="ref-cosmo_referencing_2020" ref-type="bibr">2</xref> <xref alt="4" rid="ref-dicosmoU003Ahal-01865790" ref-type="bibr">4</xref> of the initial Git commit.
-  Subsequent Git commits add document snapshots to the document succession.
-  However, the Git tree of each commit does not represent a single document snapshot;
-  instead, it records all snapshots in the succession.
-  The top-level directory contains subdirectories named with non-negative integers.
-  Each subdirectory contains either an entry named <monospace>object</monospace> or further subdirectories also
-  named with non-negative integers.
-  An entry named <monospace>object</monospace> encodes a document snapshot,
-  which may be a file (Git blob) or a directory (Git tree).
-  For example, adding a single file as edition 1 results in a
-  directory path <monospace>1/object</monospace> that corresponds to a Git blob for edition 1.</p>
-  <sec id="digital-signing">
-    <title>Digital Signing</title>
-    <p>For testing purposes, a document succession in Git can be unsigned.
-    However, for public distribution, it must be signed.
-    Digital signatures are applied using SSH signing keys through
-    <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git</ext-link> <xref alt="1" rid="ref-enwikiU003Agit" ref-type="bibr">1</xref>.
-    Each commit in a signed document succession must be signed
-    and contain a <monospace>signed_succession</monospace> subdirectory that includes an
-    <monospace>allowed_signers</monospace> file listing the public keys authorized to extend the document
-    succession.</p>
-  </sec>
-  <sec id="implementation-choice-rationales">
-    <title>Implementation Choice Rationales</title>
-    <sec id="separation-of-git-history-from-edition-history">
-      <title>Separation of Git History from Edition History</title>
-      <p>Representing the history of editions through means other than Git commit history
-      is a deliberate design choice.
-      Git commit history records all Git actions,
-      which can lead to inflexible and complicated non-linear histories.
-      Software Heritage automatically preserves Git commits,
-      increasing the risk that a Git commit history could become
-      an unintended complicated non-linear history.
-      Non-linear Git commit histories and merge commits might be useful in certain scenarios.</p>
-      <p>Separating edition history from Git commit history also allows
-      for future enhancements, such as retracting specific editions.</p>
-    </sec>
-    <sec id="use-of-git-tree-paths-instead-of-git-tags">
-      <title>Use of Git Tree Paths Instead of Git Tags</title>
-      <p>In document successions, edition numbers are akin to software release versions,
-      which are typically identified using Git tags.
-      However, this specification adopts a different approach.
-      Edition numbers are recorded with file paths in Git trees rather than Git tags.
-      With this approach, a single latest Git commit captures a complete record of a document succession.
-      This means copying document successions is as easy as copying Git branches.
-      This is especially useful when consolidating records from multiple sources into a single Git repository.</p>
-      <p>In contrast, software projects, which often include release tags,
-      are copied by cloning the entire repository.
-      Using Git tags for edition numbers would
-      introduce the complexity of keeping a branch and edition number tags in sync,
-      thereby increasing the risk of problems during copying.</p>
-      <p>While branches in Git repositories are useful for managing document successions,
-      branch names do not constitute a part of the document succession record.</p>
-    </sec>
-  </sec>
-</sec>
 <sec id="acknowledgments">
   <title>Acknowledgments</title>
   <p>Thank you to Valentin Lorentz for raising questions about design choices
   and pointing out an important shortcoming in how GPG digital signatures were used
-  in the initial implementation of the Hidos library (version 0.3) <xref alt="5" rid="ref-hidosU003A0.3" ref-type="bibr">5</xref>.</p>
+  in the initial implementation of the Hidos library (version 0.3) <xref alt="4" rid="ref-hidosU003A0.3" ref-type="bibr">4</xref>.</p>
 </sec>
 <sec id="further-reading">
   <title>Further Reading</title>
@@ -307,7 +246,7 @@ gh-703611066 https://github.com/digital-successions/1wFGhvmv8XZfPx0O5Hya2e9AyXo.
     <list-item>
       <p>This specification is heavily influenced by the concept of <italic>intrinsic identifier</italic> and
       related concepts discussed in
-      <xref alt="2" rid="ref-cosmo_referencing_2020" ref-type="bibr">2</xref> <xref alt="4" rid="ref-dicosmoU003Ahal-01865790" ref-type="bibr">4</xref>.</p>
+      <xref alt="2" rid="ref-cosmo_referencing_2020" ref-type="bibr">2</xref> <xref alt="5" rid="ref-dicosmoU003Ahal-01865790" ref-type="bibr">5</xref>.</p>
     </list-item>
     <list-item>
       <p>For a discussion on various concepts and proposed terminology regarding persistent
@@ -407,7 +346,7 @@ gh-703611066 https://github.com/digital-successions/1wFGhvmv8XZfPx0O5Hya2e9AyXo.
       <publisher-name>RFC Editor; Internet Requests for Comments; RFC Editor</publisher-name>
       <year iso-8601-date="2006-10">2006</year><month>10</month>
       <issn>2070-1721</issn>
-      <uri>https://www.rfc-editor.org/info/rfc4648.txt</uri>
+      <uri>https://www.rfc-editor.org/info/rfc4648</uri>
       <pub-id pub-id-type="doi">10.17487/RFC4648</pub-id>
     </element-citation>
   </ref>
