@@ -2,7 +2,7 @@
 
 ---
 title: "Document Succession Identifiers"
-date: 2024-02-18
+date: 2024-02-20
 abstract: |
     **DOCUMENT TYPE**: Living Technical Specification
 
@@ -19,7 +19,7 @@ abstract: |
     however, an example is Baseprint document snapshots.
 ...
 
-<!-- copybreak off # proof -->
+<!-- copybreak off -->
 
 ## Background
 
@@ -45,8 +45,7 @@ Scope
 This document is a specification of DSI for interoperability with the following 
 free open-source software reference implementations:
 
-* the Python package [Epijats](https://pypi.org/project/epijats) version 1.3,
-* the Python package [Hidos](https://pypi.org/project/hidos/) version 1.3 [@hidos:1.3], and
+* the Python package [Hidos](https://pypi.org/project/hidos/) version 1.3 [@hidos:1.3] and
 * the [Document Succession Highly Manual Toolkit](https://manual.perm.pub) [@dshmtm].
 
 This specification does not define potential DSI features that are not implemented in any software.
@@ -98,7 +97,7 @@ and can be archived in the
 
 > <https://archive.softwareheritage.org/swh:1:dir:eb9dfc65c22cde7b558ca2070ed4b2950074ed2f>
 
-### Edition Numbers
+### Snapshot Edition Numbers
 
 Edition numbers identify document snapshots within a document succession.
 An edition number is composed of non-negative integers separated by periods.
@@ -124,20 +123,25 @@ Every document snapshot in a document succession has an edition number assigned 
 >
 > `swh:1:dir:eb9dfc65c22cde7b558ca2070ed4b2950074ed2f`
 
-<!-- copybreak off # TODO -->
+A *snapshot edition number* is an edition number that is assigned to a document
+snapshot.
+The final integer of a snapshot edition number is positive.
 
-### Lower-level Edition Numbers
+<!-- copybreak off -->
 
-An edition number is *below* another edition number if it consists of
-the same non-negative integers that start the other edition number.
-For example, edition number `1.2.3` is below edition number `1.2`.
-An edition number is *above* another if the other is *below* it.
+### Coarse Edition Numbers
 
-If an edition number is assigned to a document snapshot,
-then no edition number above or below it is assigned to a document snapshot.
-If an edition numbers is not assigned to a document snapshot,
-then it implicitly identifies a sequence of editions assigned to snapshots.
-This sequence consists of all the edition numbers below it that are assigned to a snapshot.
+An edition number is *coarser* than another edition number if it drops one or more of the
+final integers of the other.
+Conversely, an edition number is *finer* than another if the latter is *coarser* than it.
+For example,
+edition number `1.3` is coarser than edition number `1.3.2`, which, in turn, is *finer*
+than `1.3`.
+
+A *coarse edition number* refers to an edition number that is coarser than a snapshot edition number.
+A coarse edition number is not assigned to a document snapshot.
+Instead, it implicitly identifies a dynamic sequence of editions.
+This sequence consists of all the finer edition numbers assigned to document snapshots.
 
 **Example**: 
 
@@ -153,105 +157,89 @@ This sequence consists of all the edition numbers below it that are assigned to 
 >
 > `1wFGhvmv8XZfPx0O5Hya2e9AyXo/1.4`
 
-Reference implementation Epijats will generate webpage content for edition numbers
-higher than edition numbers assigned to snapshots.
-The snapshop that is the most advanced edition in a sequence will be used to generated
-the a webpage.
-
-### Obsolete Editions
-
-Multilevel edition numbers resemble software package release numbers
-(for example, software release 2.19.2).
-The integers that compose an edition number can be given a lexicographic order, that is,
-an ordering like a dictionary.
-For example, `2.1` comes after `1.2` in this ordering.
-The reference implementations present editions which precede another edition
-in lexicographic order as *obsolete*.
-The Epijats library generates webpage content which encourages readers to visit
-the edition most advanced in this ordering.
-
-### Unlisted Editions
-
-The last integer is positive for an edition number assigned to a snapshot.
-The reference implementation present edition numbers with a zero integer component as
-*unlisted*.
-In the case of Epijats, this results in unlisted edition numbers not being included by
-default in prominent edition number lists.
-
 <!-- copybreak off -->
 
 Formal Definitions
 ------------------
 
-The following grammar is expressed in an extended Augmented Backus—Naur Form (ABNF) from
-[RFC5234](https://www.rfc-editor.org/info/rfc5234) [@rfc5234].
-In this notation, a vertical bar (`|`) is synonymous with slash (`/`) to match alternatives,
-and an ellipsis (`…`) matches a range of ASCII characters.
+The following grammar is expressed in ISO/IEC 14977
+[Extended Backus—Naur Form (EBNF)](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form)
+further extended to allow an ellipsis (`…`) to denote a range of ASCII characters.
 
 ### Textual Representation of a DSI
 
 ```
-dsi = [ prefix ] base_dsi [ "/" [ edition_number ] ]
-base_dsi = 26(b64u_digit) b64u_digit27
-edition_number = *(non_neg_int ".") pos_int
-non_neg_int = "0" | pos_int
-pos_int = pos_dec_digit *(dec_digit)
-pos_dec_digit = "1"…"9"
-dec_digit = "0" | pos_dec_digit
-b64u_digit = "A"…"Z" | "a"…"z" | dec_digit | "-" | "_"
+dsi = [ prefix ], base_dsi, [ "/" , [ edition_number ] ] ;
+base_dsi = 26 * b64u_digit, b64u_digit27 ;
+edition_number = { non_neg_int, "." }, pos_int ;
+non_neg_int = "0" | pos_int ;
+pos_int = pos_dec_digit, { dec_digit } ;
+pos_dec_digit = "1"…"9" ;
+dec_digit = "0" | pos_dec_digit ;
+b64u_digit = "A"…"Z" | "a"…"z" | dec_digit | "-" | "_" ;
 b64u_digit27 = "A" | "E" | "I" | "M" | "Q" | "U" | "Y" | "c" |
-               "g" | "k" | "o" | "s" | "w" | "0" | "4" | "8"
+               "g" | "k" | "o" | "s" | "w" | "0" | "4" | "8" ;
 ```
 
 The optional `prefix` is not defined in this specification but is described in the [Discussion] section.
 
-<!-- copybreak off # TODO -->
+<!-- copybreak off -->
 
-### Document Succession
+### Criteria for a Document Succession
 
-The base DSI is a base64url representation of a 20-byte hash that identifies a data structure,
-but this DSI specification does not define the format of the data structure.
+The base DSI is a base64url representation of a 20-byte hash that identifies a data structure.
 However,
-the [Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8)
-specification does.
-Different formats are compatible if they expose the following data model of essential
-information found in a document succession.
-The only restriction this DSI specification places on document snapshots is that they
-must be static and digitally encoded.
+this DSI specification does not define the format of the data structure.
+The [Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8)
+specification,
+on the other hand, does define it.
+Different data structure formats are compatible if they record document successions
+that satisfy the following criteria.
 
-### Data Model of a Document Succession
+**Criterion**:
+The abstract data model recorded by a document succession is a mapping from edition
+numbers to document snapshots.
+A *snapshot edition number* refers to an edition number thus mapped.
 
-Mathematically this model is a mapping from edition numbers to document snapshots.
+**Criterion**:
+The document snapshots contained in a document succession are static and digitally encoded.
+
+**Criterion**:
 Edition numbers are non-empty tuples of non-negative integers.
 
-### Edition Number
+**Criterion**:
+The final integer of every snapshot edition number is positive.
 
-In some formal contexts, such as code, it may be convenient to define an *empty edition
-number* which corresponds to an empty tuple with no integers.
+**Criterion**:
+Coarse edition numbers are not assigned to document snapshots.
+A *coarse edition number* is an edition number that is coarser than a snapshot edition
+number.
+An edition number is coarser than another edition number if it is an initial sub-tuple.
+In other words, it drops integers from the end of the tuple.
+
+### Empty Edition Number
+
+In some formal contexts, such as in software, it may be convenient to define an *empty edition
+number*, which corresponds to an empty tuple containing no integers.
 Unless otherwise noted,
 the unqualified term *edition number* means a non-empty edition number.
 
-**Criterion**:
-An edition number is a tuple of non-negative integers strictly less than ten thousand.
+The empty edition number is not mapped to a document snapshot in document successions.
 
-### Assignments
-
-**Criterion**:
-For an edition number assigned to a document snapshot, the last integer is not zero.
-
-<!-- copybreak off # TODO -->
+<!-- copybreak off -->
 
 Discussion
 ----------
 
 ### Public Archives
 
-Due to the role of the Software Heritage Archive and the reference implementations of DSGL,
-once a document succession is publicly archived with an 
-edition number assigned to a document snapshot,
-reassigned is particular difficult and unlikely to be achieved.
-The only pragmatic way to update a document succession archived in the Software
-Heritage Archive is to add new edition numbers, not reassign them.
+Due to the content policy of the Software Heritage Archive,
+once a document succession is publicly archived with a snapshot edition number,
+reassigning an edition number is particularly difficult and unlikely to be achieved.
+Updating a DSGL document succession in the Software Heritage Archive by adding a new
+edition number is effectively the only practical way to update a document succession.
+
+<!-- copybreak off -->
 
 ### Optional DSI Prefix
 
@@ -274,30 +262,6 @@ as demonstrated in the following example:
 ```bash
 $ firefox https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo
 ```
-
-### Detailed Examples
-
-The following detailed examples are for the document succession of this specification.
-The base DSI of a document succession in DSGL is a base64url representation of the Git
-commit hash.
-
-#### Base DSI
-
-**Example**: Initial Git commit hash (in hexadecimal).
-
-> `d7014686f9aff1765f3f1d0ee47c9ad9ef40c97a`
-
-**Example**: SWHID for initial commit.
-
-> `swh:1:rev:d7014686f9aff1765f3f1d0ee47c9ad9ef40c97a`
-
-Hashes and SWHIDs can be used across multiple archives, such as
-GitHub and the Software Heritage Archive:
-
-> <https://github.com/document-succession/1wFGhvmv8XZfPx0O5Hya2e9AyXo/commit/d7014686f9aff1765f3f1d0ee47c9ad9ef40c97a>
-
-> <https://archive.softwareheritage.org/swh:1:rev:d7014686f9aff1765f3f1d0ee47c9ad9ef40c97a>
-
 
 <!-- copybreak off -->
 
@@ -362,6 +326,8 @@ Thank you to Valentin Lorentz for raising questions about design choices
 and pointing out an important shortcoming in how GPG digital signatures were used
 in the initial implementation of the Hidos library (version 0.3) [@hidos:0.3].
 
+This document has been copyedited with AI using <https://copyaid.it>.
+
 
 Further Reading
 ---------------
@@ -376,14 +342,15 @@ Further Reading
   "intraversioned" and "extraversioned" PIDs depending on the edition number.
 
 
-<!-- copybreak off # proof -->
+<!-- copybreak off -->
 
 Changes
 -------
 
 ### From Edition 2.1 to 2.2
 
-* Moved Git storage details into new DSGL specification.
+* Moved Git storage details into the new
+  [DSGL specification](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8).
 * Expanded material into formal definition and informal description sections.
 
 ### From Edition 1 to 2
