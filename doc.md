@@ -10,7 +10,7 @@ abstract: |
     references for the long-term retrieval of a document succession,
     a type of document that is correctable yet redistributable across multiple websites.
     This DSI specification works in conjunction with the
-    Document Succession Git Layout (DSGL) specification,
+    [Document Succession Git Layout (DSGL) specification](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8),
     which is a storage format for document successions.
     A DSI can reference either an entire document succession or,
     when an edition number is included, specific document snapshots.
@@ -19,32 +19,42 @@ abstract: |
     however, an example is Baseprint document snapshots.
 ...
 
-<!-- copybreak on -->
+<!-- copybreak off # proof -->
 
-Related Resources
------------------
+## Background
 
-* The website <https://baseprints.singlesource.pub/> is available as a forum
-  for open discussion and tracking topics relating to this DSI specification
-  and other specifications related to Baseprint document successions.
-* As of 2023, the website
-  [try.perm.pub](https://try.perm.pub) provides documentation, tutorials, and
-  guides on resources that support Document Succession Identifiers (DSIs).
-* For a non-technical overview of DSIs and their purpose, visit
-  [Why Publish Digital Successions](https://perm.pub/wk1LzCaCSKkIvLAYObAvaoLNGPc).
+Websites like [https://perm.pub](https://perm.pub)
+use free open-source software, such as the Python package
+[Epijats](https://gitlab.com/perm.pub/epijats),
+to process the formats of
+[Document Succession Identifiers (DSI)](https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo),
+[Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8),
+and Baseprint document snapshots.
+For the motivation behind these technologies,
+refer to [Why Publish Baseprint Document Successions](
+https://perm.pub/wk1LzCaCSKkIvLAYObAvaoLNGPc
+).
+Tutorials and introductory materials are also available at
+[https://try.perm.pub/](https://try.perm.pub).
 
-<!-- copybreak -->
+<!-- copybreak off -->
 
 Scope
 -----
 
-This is a specification for interoperability with these free open-source software
-reference implementations:
+This document is a specification of DSI for interoperability with the following 
+free open-source software reference implementations:
 
 * the Python package [Epijats](https://pypi.org/project/epijats) version 1.3,
-* the Python package [Hidos](https://pypi.org/project/hidos/) [@hidos:1.3], and
+* the Python package [Hidos](https://pypi.org/project/hidos/) version 1.3 [@hidos:1.3], and
 * the [Document Succession Highly Manual Toolkit](https://manual.perm.pub) [@dshmtm].
 
+This specification does not define potential DSI features that are not implemented in any software.
+The online forum at <https://baseprints.singlesource.pub> is available for communication
+about this living specification, its reference implementations, and other specifications
+related to Baseprint document successions.
+
+<!-- copybreak off -->
 
 Informal Description
 --------------------
@@ -62,7 +72,7 @@ A base DSI is a 27-character string in base64url format (RFC 4648)[@rfc4648]
 representing a 20-byte binary hash that identifies a document succession.
 This DSI specification does not define a storage format for document successions.
 However, the reference implementations for DSI also support the storage format defined
-by Document Succession Git Layout (DSGL).
+by [Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8).
 In DSGL,
 the base DSI is calculated from the initial
 [Git](https://en.wikipedia.org/wiki/Git) [@enwiki:git]
@@ -80,26 +90,25 @@ which are identifiable by [Software Hash Identifiers (SWHIDs)](https://swhid.org
 and can be archived in the
 [Software Heritage Archive](https://softwareheritage.org) [@cosmo_referencing_2020].
 
-**Example**: SWHID of a document snapshot of this specification from 2023.
+**Example**: SWHID of a document snapshot from 2023 of this specification.
 
 > `swh:1:dir:eb9dfc65c22cde7b558ca2070ed4b2950074ed2f`
 
-**Example**: Permalink at the Software Heritage Archive.
+**Example**: Permalink to the Software Heritage Archive.
 
 > <https://archive.softwareheritage.org/swh:1:dir:eb9dfc65c22cde7b558ca2070ed4b2950074ed2f>
 
 ### Edition Numbers
 
 Edition numbers identify document snapshots within a document succession.
-An edition number is composed of one to four non-negative
-integers, each less than one thousand, and separated by periods.
+An edition number is composed of non-negative integers separated by periods.
 
 **Example**: DSI of the first edition.
 
 > `1wFGhvmv8XZfPx0O5Hya2e9AyXo/1`
 
 An edition number is *multilevel* if it is composed of more than one integer (separated
-by a periods).
+by periods).
 
 **Example**: DSI of the fourth subedition of the first edition.
 
@@ -115,10 +124,7 @@ Every document snapshot in a document succession has an edition number assigned 
 >
 > `swh:1:dir:eb9dfc65c22cde7b558ca2070ed4b2950074ed2f`
 
-In some formal contexts, such as code, it may be convenient to admit an *empty edition
-number* which corresponds to an empty tuple with no non-negative integers.
-Unless otherwise noted,
-the unqualified term *edition number* means a non-empty edition number.
+<!-- copybreak off # TODO -->
 
 ### Lower-level Edition Numbers
 
@@ -177,48 +183,63 @@ default in prominent edition number lists.
 Formal Definitions
 ------------------
 
-### Textual Representation in Extended Backus—Naur Form
+The following grammar is expressed in an extended Augmented Backus—Naur Form (ABNF) from
+[RFC5234](https://www.rfc-editor.org/info/rfc5234) [@rfc5234].
+In this notation, a vertical bar (`|`) is synonymous with slash (`/`) to match alternatives,
+and an ellipsis (`…`) matches a range of ASCII characters.
 
-Note that `[ x ] * N` matches zero to N repetitions of `x`.
+### Textual Representation of a DSI
 
 ```
-dsi ::= [ prefix ] base_dsi [ "/" [ edition_number ] ] ;
-base_dsi ::= ( b64u_digit * 26 ) b64u_digit27 ;
-edition_number ::= ( [ non_neg_int "." ] * 3 ) pos_int;
-non_neg_int ::= "0" | pos_int ;
-pos_int ::= pos_dec_digit ( [ dec_digit ] * 3 ) ;
-pos_dec_digit := "1" ... "9" ;
-dec_digit := "0" | pos_dec_digit;
-b64u_digit ::= "A" ... "Z" | "a" ... "z" | dec_digit | "-" | "_" ;
-b64u_digit27 ::= "A" | "E" | "I" | "M" | "Q" | "U" | "Y" | "c" |
-                 "g" | "k" | "o" | "s" | "w" | "0" | "4" | "8" ;
+dsi = [ prefix ] base_dsi [ "/" [ edition_number ] ]
+base_dsi = 26(b64u_digit) b64u_digit27
+edition_number = *(non_neg_int ".") pos_int
+non_neg_int = "0" | pos_int
+pos_int = pos_dec_digit *(dec_digit)
+pos_dec_digit = "1"…"9"
+dec_digit = "0" | pos_dec_digit
+b64u_digit = "A"…"Z" | "a"…"z" | dec_digit | "-" | "_"
+b64u_digit27 = "A" | "E" | "I" | "M" | "Q" | "U" | "Y" | "c" |
+               "g" | "k" | "o" | "s" | "w" | "0" | "4" | "8"
 ```
 
-The optional `prefix` is unspecified and is described in the discussion section that
-follows.
+The optional `prefix` is not defined in this specification but is described in the [Discussion] section.
 
-<!-- copybreak off -->
+<!-- copybreak off # TODO -->
 
-### Data Model
+### Document Succession
 
-Git records in DSGL contain much Git-specific information
-that does not constitute the essential information of a document succession.
-The following formal model captures the essential information of a document
-succession.
+The base DSI is a base64url representation of a 20-byte hash that identifies a data structure,
+but this DSI specification does not define the format of the data structure.
+However,
+the [Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8)
+specification does.
+Different formats are compatible if they expose the following data model of essential
+information found in a document succession.
+The only restriction this DSI specification places on document snapshots is that they
+must be static and digitally encoded.
 
-Mathematically this model is a pair `(B, M)` where `B` is the base document succession
-identifier and `M` is a mapping from edition numbers to document snapshots.
-The base identifier `B` corresponds to the base DSI and the 20-byte Git hash of the
-initial commit.
-The domain of the mapping 'M' is a set of edition numbers which mathematically are
-defined as non-empty tuples of non-negative integers.
-The [DSI specification)](https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo)
-places additional restrictions on what domain of edition numbers are valid.
-The range of `M` consists of a set of digital objects that encode the document snapshots.
-Any document snapshot that can be encoded as a Git blog or Git tree is compatible with
-this model.
-Git blobs and Git trees are supported by the core SWHIDs of `swh:1:cnt:` and `swh:1:dir:`.
+### Data Model of a Document Succession
 
+Mathematically this model is a mapping from edition numbers to document snapshots.
+Edition numbers are non-empty tuples of non-negative integers.
+
+### Edition Number
+
+In some formal contexts, such as code, it may be convenient to define an *empty edition
+number* which corresponds to an empty tuple with no integers.
+Unless otherwise noted,
+the unqualified term *edition number* means a non-empty edition number.
+
+**Criterion**:
+An edition number is a tuple of non-negative integers strictly less than ten thousand.
+
+### Assignments
+
+**Criterion**:
+For an edition number assigned to a document snapshot, the last integer is not zero.
+
+<!-- copybreak off # TODO -->
 
 Discussion
 ----------
@@ -355,8 +376,15 @@ Further Reading
   "intraversioned" and "extraversioned" PIDs depending on the edition number.
 
 
+<!-- copybreak off # proof -->
+
 Changes
 -------
+
+### From Edition 2.1 to 2.2
+
+* Moved Git storage details into new DSGL specification.
+* Expanded material into formal definition and informal description sections.
 
 ### From Edition 1 to 2
 
