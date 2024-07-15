@@ -2,7 +2,7 @@
 
 ---
 title: "Document Succession Identifiers"
-date: 2024-02-20
+date: 2024-07-15
 abstract: |
     **DOCUMENT TYPE**: Living Technical Specification
 
@@ -97,10 +97,13 @@ and can be archived in the
 
 > <https://archive.softwareheritage.org/swh:1:dir:eb9dfc65c22cde7b558ca2070ed4b2950074ed2f>
 
+<!-- copybreak off -->
+
 ### Snapshot Edition Numbers
 
 Edition numbers identify document snapshots within a document succession.
-An edition number is composed of non-negative integers separated by periods.
+An edition number is composed of positive integers separated by periods
+(possibly just a single positive integer).
 
 **Example**: DSI of the first edition.
 
@@ -125,7 +128,6 @@ Every document snapshot in a document succession has an edition number assigned 
 
 A *snapshot edition number* is an edition number that is assigned to a document
 snapshot.
-The final integer of a snapshot edition number is positive.
 
 <!-- copybreak off -->
 
@@ -171,9 +173,8 @@ further extended to allow an ellipsis (`…`) to denote a range of ASCII charact
 ```
 dsi = [ prefix ], base_dsi, [ "/" , [ edition_number ] ] ;
 base_dsi = 26 * b64u_digit, b64u_digit27 ;
-edition_number = { non_neg_int, "." }, pos_int ;
-non_neg_int = "0" | pos_int ;
-pos_int = pos_dec_digit, { dec_digit } ;
+edition_number = pos_int, 3 * [ ".", pos_int ] ;
+pos_int = pos_dec_digit, 3 * [ dec_digit ] ;
 pos_dec_digit = "1"…"9" ;
 dec_digit = "0" | pos_dec_digit ;
 b64u_digit = "A"…"Z" | "a"…"z" | dec_digit | "-" | "_" ;
@@ -205,10 +206,7 @@ A *snapshot edition number* refers to an edition number thus mapped.
 The document snapshots contained in a document succession are static and digitally encoded.
 
 **Criterion**:
-Edition numbers are non-empty tuples of non-negative integers.
-
-**Criterion**:
-The final integer of every snapshot edition number is positive.
+Edition numbers are non-empty tuples of positive integers.
 
 **Criterion**:
 Coarse edition numbers are not assigned to document snapshots.
@@ -225,6 +223,19 @@ Unless otherwise noted,
 the unqualified term *edition number* means a non-empty edition number.
 
 The empty edition number is not mapped to a document snapshot in document successions.
+
+<!-- copybreak off -->
+
+### Unlisted Edition Numbers
+
+An edition number with any integer component equal to zero is an **unlisted** edition number.
+Some storage formats,
+such as [Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8),
+support **unlisted** edition numbers.
+Renderings of a document succession may safely omit and ignore unlisted editions.
+Some implementations may provide a mechanism to access unlisted editions,
+keeping in mind that
+the default presentation of a document succession does not include unlisted editions.
 
 <!-- copybreak off -->
 
@@ -346,6 +357,13 @@ Further Reading
 
 Changes
 -------
+
+### From Edition 2.2 to 2.3
+
+* Restrict integers of an edition number to have no more than 4 digits.
+* Restrict edition numbers to have no more than 4 integers (separated by periods).
+* Change unqualified edition number to not include integers of zero.
+* Add section about unlisted edition numbers.
 
 ### From Edition 2.1 to 2.2
 

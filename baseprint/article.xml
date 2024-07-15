@@ -26,9 +26,9 @@
 <email>castedo@castedo.com</email>
 </contrib>
 </contrib-group>
-<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2024-02-20">
-<day>20</day>
-<month>2</month>
+<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2024-07-15">
+<day>15</day>
+<month>7</month>
 <year>2024</year>
 </pub-date>
 <permissions>
@@ -131,7 +131,8 @@ however, an example is Baseprint document snapshots.</p>
   <sec id="snapshot-edition-numbers">
     <title>Snapshot Edition Numbers</title>
     <p>Edition numbers identify document snapshots within a document succession.
-    An edition number is composed of non-negative integers separated by periods.</p>
+    An edition number is composed of positive integers separated by periods
+    (possibly just a single positive integer).</p>
     <p><bold>Example</bold>: DSI of the first edition.</p>
     <disp-quote>
       <p><monospace>1wFGhvmv8XZfPx0O5Hya2e9AyXo/1</monospace></p>
@@ -150,8 +151,7 @@ however, an example is Baseprint document snapshots.</p>
       <p><monospace>swh:1:dir:eb9dfc65c22cde7b558ca2070ed4b2950074ed2f</monospace></p>
     </disp-quote>
     <p>A <italic>snapshot edition number</italic> is an edition number that is assigned to a document
-    snapshot.
-    The final integer of a snapshot edition number is positive.</p>
+    snapshot.</p>
   </sec>
   <sec id="coarse-edition-numbers">
     <title>Coarse Edition Numbers</title>
@@ -185,9 +185,8 @@ however, an example is Baseprint document snapshots.</p>
     <title>Textual Representation of a DSI</title>
     <preformat>dsi = [ prefix ], base_dsi, [ &quot;/&quot; , [ edition_number ] ] ;
 base_dsi = 26 * b64u_digit, b64u_digit27 ;
-edition_number = { non_neg_int, &quot;.&quot; }, pos_int ;
-non_neg_int = &quot;0&quot; | pos_int ;
-pos_int = pos_dec_digit, { dec_digit } ;
+edition_number = pos_int, 3 * [ &quot;.&quot;, pos_int ] ;
+pos_int = pos_dec_digit, 3 * [ dec_digit ] ;
 pos_dec_digit = &quot;1&quot;…&quot;9&quot; ;
 dec_digit = &quot;0&quot; | pos_dec_digit ;
 b64u_digit = &quot;A&quot;…&quot;Z&quot; | &quot;a&quot;…&quot;z&quot; | dec_digit | &quot;-&quot; | &quot;_&quot; ;
@@ -212,9 +211,7 @@ b64u_digit27 = &quot;A&quot; | &quot;E&quot; | &quot;I&quot; | &quot;M&quot; | &
     <p><bold>Criterion</bold>:
     The document snapshots contained in a document succession are static and digitally encoded.</p>
     <p><bold>Criterion</bold>:
-    Edition numbers are non-empty tuples of non-negative integers.</p>
-    <p><bold>Criterion</bold>:
-    The final integer of every snapshot edition number is positive.</p>
+    Edition numbers are non-empty tuples of positive integers.</p>
     <p><bold>Criterion</bold>:
     Coarse edition numbers are not assigned to document snapshots.
     A <italic>coarse edition number</italic> is an edition number that is coarser than a snapshot edition
@@ -229,6 +226,17 @@ b64u_digit27 = &quot;A&quot; | &quot;E&quot; | &quot;I&quot; | &quot;M&quot; | &
     Unless otherwise noted,
     the unqualified term <italic>edition number</italic> means a non-empty edition number.</p>
     <p>The empty edition number is not mapped to a document snapshot in document successions.</p>
+  </sec>
+  <sec id="unlisted-edition-numbers">
+    <title>Unlisted Edition Numbers</title>
+    <p>An edition number with any integer component equal to zero is an <bold>unlisted</bold> edition number.
+    Some storage formats,
+    such as <ext-link ext-link-type="uri" xlink:href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</ext-link>,
+    support <bold>unlisted</bold> edition numbers.
+    Renderings of a document succession may safely omit and ignore unlisted editions.
+    Some implementations may provide a mechanism to access unlisted editions,
+    keeping in mind that
+    the default presentation of a document succession does not include unlisted editions.</p>
   </sec>
 </sec>
 <sec id="discussion">
@@ -341,6 +349,23 @@ gh-703611066 https://github.com/digital-successions/1wFGhvmv8XZfPx0O5Hya2e9AyXo.
 </sec>
 <sec id="changes">
   <title>Changes</title>
+  <sec id="from-edition-2.2-to-2.3">
+    <title>From Edition 2.2 to 2.3</title>
+    <list list-type="bullet">
+      <list-item>
+        <p>Restrict integers of an edition number to have no more than 4 digits.</p>
+      </list-item>
+      <list-item>
+        <p>Restrict edition numbers to have no more than 4 integers (separated by periods).</p>
+      </list-item>
+      <list-item>
+        <p>Change unqualified edition number to not include integers of zero.</p>
+      </list-item>
+      <list-item>
+        <p>Add section about unlisted edition numbers.</p>
+      </list-item>
+    </list>
+  </sec>
   <sec id="from-edition-2.1-to-2.2">
     <title>From Edition 2.1 to 2.2</title>
     <list list-type="bullet">
