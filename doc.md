@@ -2,7 +2,6 @@
 
 ---
 title: "Document Succession Identifiers"
-date: 2024-07-15
 abstract: |
     **DOCUMENT TYPE**: Living Technical Specification
 
@@ -17,7 +16,7 @@ abstract: |
     This feature lets readers quickly access both the latest edition and earlier editions.
 ...
 
-<!-- copybreak on -->
+<!-- copybreak off -->
 
 ## Background
 
@@ -35,7 +34,7 @@ https://perm.pub/wk1LzCaCSKkIvLAYObAvaoLNGPc
 Tutorials and introductory materials are also available at
 [https://try.perm.pub/](https://try.perm.pub).
 
-<!-- copybreak on -->
+<!-- copybreak off -->
 
 Scope
 -----
@@ -351,7 +350,7 @@ Further Reading
   "intraversioned" and "extraversioned" PIDs depending on the edition number.
 
 
-<!-- copybreak on -->
+<!-- copybreak off -->
 
 Changes
 -------
