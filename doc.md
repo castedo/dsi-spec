@@ -15,21 +15,19 @@ abstract: |
     A DSI can reference either an entire document succession or,
     when an edition number is included, specific document snapshots.
     This feature lets readers quickly access both the latest edition and earlier editions.
-    This DSI specification does not define any specific format for document snapshots;
-    however, an example is Baseprint document snapshots.
 ...
 
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 ## Background
 
 Websites like [https://perm.pub](https://perm.pub)
 use free open-source software, such as the Python package
-[Epijats](https://gitlab.com/perm.pub/epijats),
+[Hidos](https://gitlab.com/perm.pub/hidos),
 to process the formats of
-[Document Succession Identifiers (DSI)](https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo),
-[Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8),
-and Baseprint document snapshots.
+[Document Succession Identifiers (DSI)](https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo)
+and [Document Succession Git Layout
+(DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8)[@dsgl].
 For the motivation behind these technologies,
 refer to [Why Publish Baseprint Document Successions](
 https://perm.pub/wk1LzCaCSKkIvLAYObAvaoLNGPc
@@ -37,7 +35,7 @@ https://perm.pub/wk1LzCaCSKkIvLAYObAvaoLNGPc
 Tutorials and introductory materials are also available at
 [https://try.perm.pub/](https://try.perm.pub).
 
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 Scope
 -----
@@ -45,13 +43,17 @@ Scope
 This document is a specification of DSI for interoperability with the following 
 free open-source software reference implementations:
 
-* the Python package [Hidos](https://pypi.org/project/hidos/) version 1.3 [@hidos:1.3] and
+* the Python package [Hidos](https://pypi.org/project/hidos/) version 2.6 [@hidos:2.6] and
 * the [Document Succession Highly Manual Toolkit](https://manual.perm.pub) [@dshmtm].
 
 This specification does not define potential DSI features that are not implemented in any software.
 The online forum at <https://baseprints.singlesource.pub> is available for communication
 about this living specification, its reference implementations, and other specifications
 related to Baseprint document successions.
+
+This DSI specification does not define any specific format for document snapshots;
+however, one such example is the [Baseprint Document
+Format](https://perm.pub/DPRkAz3vwSj85mBCgG49DeyndaE/)[@bpdf].
 
 <!-- copybreak off -->
 
@@ -77,7 +79,7 @@ the base DSI is calculated from the initial
 [Git](https://en.wikipedia.org/wiki/Git) [@enwiki:git]
 commit of a document succession.
 A Git commit corresponds to a *core
-[Software Hash Identifier (SWHID)](https://swhid.org) for revisions*.
+[Software Hash Identifier (SWHID)](https://swhid.org) for revisions*[@swhid].
 
 ### Document Snapshots
 
@@ -161,6 +163,7 @@ This sequence consists of all the finer edition numbers assigned to document sna
 
 <!-- copybreak off -->
 
+
 Formal Definitions
 ------------------
 
@@ -171,13 +174,11 @@ further extended to allow an ellipsis (`…`) to denote a range of ASCII charact
 ### Textual Representation of a DSI
 
 ```
-dsi = [ prefix ], base_dsi, [ "/" , [ edition_number ] ] ;
+dsi = [ prefix ], base_dsi, [ "/", [ edition_number ] ] ;
 base_dsi = 26 * b64u_digit, b64u_digit27 ;
-edition_number = pos_int, 3 * [ ".", pos_int ] ;
-pos_int = pos_dec_digit, 3 * [ dec_digit ] ;
-pos_dec_digit = "1"…"9" ;
-dec_digit = "0" | pos_dec_digit ;
-b64u_digit = "A"…"Z" | "a"…"z" | dec_digit | "-" | "_" ;
+edition_number = pos_int, [ ".", pos_int, [ ".", pos_int ] ] ;
+pos_int = "1"…"9", [ "0"…"9", [ "0"…"9" ] ] ;
+b64u_digit = "A"…"Z" | "a"…"z" | "0"…"9" | "-" | "_" ;
 b64u_digit27 = "A" | "E" | "I" | "M" | "Q" | "U" | "Y" | "c" |
                "g" | "k" | "o" | "s" | "w" | "0" | "4" | "8" ;
 ```
@@ -322,9 +323,7 @@ The choice of base64url is partly made on the belief that
 the following technology trends mitigate the copy-by-human-sight issue:
 
 1) Use of hyperlinks, copy-and-paste, and QR codes.
-
 2) Tools that generate websites and PDFs with customizable fonts.
-
 3) Human-to-computer interfaces incorporating
    features like autocomplete and typo correction to mitigate input errors.
 
@@ -346,17 +345,21 @@ Further Reading
 * This specification is heavily influenced by the concept of *intrinsic identifier* and
   related concepts discussed in
   [@cosmo_referencing_2020] [@dicosmo:hal-01865790].
-
 * For a discussion on various concepts and proposed terminology regarding persistent
   identifiers, see [@kunze_persistence_2017]. According to this proposed terminology,
   a DSI is a persistent identifier (PID) that is "frozen" and "waxing" with
   "intraversioned" and "extraversioned" PIDs depending on the edition number.
 
 
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 Changes
 -------
+
+### From Edition 2.3 to 3.1
+
+* Restrict integers of an edition number to have no more than 3 digits.
+* Restrict edition numbers to have no more than 3 integers (separated by periods).
 
 ### From Edition 2.2 to 2.3
 
