@@ -262,7 +262,7 @@ For added convenience, some websites provide a URL that serves as a DSI prefix.
 As of 2023, the [Hidos](https://pypi.org/project/hidos/) tool supports DSIs
 both with and without the `dsi:` prefix in its `find` subcommand. For example:
 
-```bash
+```
 $ hidos find dsi:1wFGhvmv8XZfPx0O5Hya2e9AyXo
 gh-703611066 https://github.com/digital-successions/1wFGhvmv8XZfPx0O5Hya2e9AyXo.git
 ```
@@ -270,7 +270,7 @@ gh-703611066 https://github.com/digital-successions/1wFGhvmv8XZfPx0O5Hya2e9AyXo.
 As of 2023, the website `perm.pub` supports a URL-based prefix `https://perm.pub/`,
 as demonstrated in the following example:
 
-```bash
+```
 $ firefox https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo
 ```
 
