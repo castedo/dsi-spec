@@ -44,9 +44,7 @@ use free open-source software, such as the Python package
 to process the formats of
 <a rel="external" href="https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo">Document Succession Identifiers (DSI)</a>
 and <a rel="external" href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout
-(DSGL)</a><sup>
-          <xref rid="dsgl" ref-type="bibr">1</xref>
-        </sup>.
+(DSGL)</a><sup><xref rid="dsgl" ref-type="bibr">1</xref></sup>.
 For the motivation behind these technologies,
 refer to <a rel="external" href="https://perm.pub/wk1LzCaCSKkIvLAYObAvaoLNGPc">Why Publish Baseprint Document Successions</a>.
 Tutorials and introductory materials are also available at
@@ -57,12 +55,8 @@ Tutorials and introductory materials are also available at
       <p>This document is a specification of DSI for interoperability with the following
 free open-source software reference implementations:</p>
       <ul>
-        <li>the Python package <a rel="external" href="https://pypi.org/project/hidos/">Hidos</a> version 2.6<sup>
-            <xref rid="hidos:2.6" ref-type="bibr">2</xref>
-          </sup> and</li>
-        <li>the <a rel="external" href="https://manual.perm.pub">Document Succession Highly Manual Toolkit</a><sup>
-            <xref rid="dshmtm" ref-type="bibr">3</xref>
-          </sup>.</li>
+        <li>the Python package <a rel="external" href="https://pypi.org/project/hidos/">Hidos</a> version 2.6<sup><xref rid="hidos:2.6" ref-type="bibr">2</xref></sup> and</li>
+        <li>the <a rel="external" href="https://manual.perm.pub">Document Succession Highly Manual Toolkit</a><sup><xref rid="dshmtm" ref-type="bibr">3</xref></sup>.</li>
       </ul>
       <p>This specification does not define potential DSI features that are not implemented in any software.
 The online forum at <a rel="external" href="https://baseprints.singlesource.pub">https://baseprints.singlesource.pub</a> is available for communication
@@ -70,9 +64,7 @@ about this living specification, its reference implementations, and other specif
 related to Baseprint document successions.</p>
       <p>This DSI specification does not define any specific format for document snapshots;
 however, one such example is the <a rel="external" href="https://perm.pub/DPRkAz3vwSj85mBCgG49DeyndaE/">Baseprint Document
-Format</a><sup>
-          <xref rid="bpdf" ref-type="bibr">4</xref>
-        </sup>.</p>
+Format</a><sup><xref rid="bpdf" ref-type="bibr">4</xref></sup>.</p>
     </section>
     <section id="informal-description">
       <h2>Informal Description</h2>
@@ -84,23 +76,17 @@ DSI</i>, which may be optionally followed by a slash and an edition number.</p>
         <blockquote>
           <p><tt>1wFGhvmv8XZfPx0O5Hya2e9AyXo</tt></p>
         </blockquote>
-        <p>A base DSI is a 27-character string in base64url format (RFC 4648)<sup>
-            <xref rid="rfc4648" ref-type="bibr">5</xref>
-          </sup>
+        <p>A base DSI is a 27-character string in base64url format (RFC 4648)<sup><xref rid="rfc4648" ref-type="bibr">5</xref></sup>
 representing a 20-byte binary hash that identifies a document succession.
 This DSI specification does not define a storage format for document successions.
 However, the reference implementations for DSI also support the storage format defined
 by <a rel="external" href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</a>.
 In DSGL,
 the base DSI is calculated from the initial
-<a rel="external" href="https://en.wikipedia.org/wiki/Git">Git</a><sup>
-            <xref rid="enwiki:git" ref-type="bibr">6</xref>
-          </sup>
+<a rel="external" href="https://en.wikipedia.org/wiki/Git">Git</a><sup><xref rid="enwiki:git" ref-type="bibr">6</xref></sup>
 commit of a document succession.
 A Git commit corresponds to a <i>core
-<a rel="external" href="https://swhid.org">Software Hash Identifier (SWHID)</a> for revisions</i><sup>
-            <xref rid="swhid" ref-type="bibr">7</xref>
-          </sup>.</p>
+<a rel="external" href="https://swhid.org">Software Hash Identifier (SWHID)</a> for revisions</i><sup><xref rid="swhid" ref-type="bibr">7</xref></sup>.</p>
       </section>
       <section id="document-snapshots">
         <h3>Document Snapshots</h3>
@@ -110,9 +96,7 @@ In DSGL,
 document snapshots are either Git blobs or Git trees,
 which are identifiable by <a rel="external" href="https://swhid.org">Software Hash Identifiers (SWHIDs)</a>
 and can be archived in the
-<a rel="external" href="https://softwareheritage.org">Software Heritage Archive</a><sup>
-            <xref rid="cosmo_referencing_2020" ref-type="bibr">8</xref>
-          </sup>.</p>
+<a rel="external" href="https://softwareheritage.org">Software Heritage Archive</a><sup><xref rid="cosmo_referencing_2020" ref-type="bibr">8</xref></sup>.</p>
         <p><b>Example</b>: SWHID of a document snapshot from 2023 of this specification.</p>
         <blockquote>
           <p><tt>swh:1:dir:eb9dfc65c22cde7b558ca2070ed4b2950074ed2f</tt></p>
@@ -273,9 +257,7 @@ as the last character in a base64url encoding of 40 bytes
       <section id="use-of-base64url-over-hexadecimal">
         <h3>Use of Base64url Over Hexadecimal</h3>
         <p>The textual identifier uses &#8220;base64url&#8221; (Base 64 with a URL and filename safe alphabet) as
-specified in RFC 4648<sup>
-            <xref rid="rfc4648" ref-type="bibr">5</xref>
-          </sup>.
+specified in RFC 4648<sup><xref rid="rfc4648" ref-type="bibr">5</xref></sup>.
 Both base64url and hexadecimal have their advantages and disadvantages.</p>
         <p>The main downside to base64url is its susceptibility to copy
 errors when the copying process relies on human sight.
@@ -307,24 +289,16 @@ features like autocomplete and typo correction to mitigate input errors.</li>
       <h2>Acknowledgments</h2>
       <p>Thank you to Valentin Lorentz for raising questions about design choices
 and pointing out an important shortcoming in how GPG digital signatures were used
-in the initial implementation of the Hidos library (version 0.3)<sup>
-          <xref rid="hidos:0.3" ref-type="bibr">9</xref>
-        </sup>.</p>
+in the initial implementation of the Hidos library (version 0.3)<sup><xref rid="hidos:0.3" ref-type="bibr">9</xref></sup>.</p>
       <p>This document has been copyedited with AI using <a rel="external" href="https://copyaid.it">https://copyaid.it</a>.</p>
     </section>
     <section id="further-reading">
       <h2>Further Reading</h2>
       <ul>
         <li>This specification is heavily influenced by the concept of <i>intrinsic identifier</i> and
-related concepts discussed in<sup>
-            <xref rid="cosmo_referencing_2020" ref-type="bibr">8</xref>
-          </sup><sup>
-            <xref rid="dicosmo:hal-01865790" ref-type="bibr">10</xref>
-          </sup>.</li>
+related concepts discussed in<sup><xref rid="cosmo_referencing_2020" ref-type="bibr">8</xref></sup><sup><xref rid="dicosmo:hal-01865790" ref-type="bibr">10</xref></sup>.</li>
         <li>For a discussion on various concepts and proposed terminology regarding persistent
-identifiers, see<sup>
-            <xref rid="kunze_persistence_2017" ref-type="bibr">11</xref>
-          </sup>. According to this proposed terminology,
+identifiers, see<sup><xref rid="kunze_persistence_2017" ref-type="bibr">11</xref></sup>. According to this proposed terminology,
 a DSI is a persistent identifier (PID) that is &#8220;frozen&#8221; and &#8220;waxing&#8221; with
 &#8220;intraversioned&#8221; and &#8220;extraversioned&#8221; PIDs depending on the edition number.</li>
       </ul>
